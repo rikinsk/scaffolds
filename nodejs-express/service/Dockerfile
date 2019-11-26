@@ -1,12 +1,12 @@
-FROM node:alpine
+FROM node:carbon
 
-WORKDIR /app
+WORKDIR /ts-app
 
-COPY ./package*.json ./
+COPY package*.json ./
 
 RUN npm ci
 
-COPY ./* ./
+COPY . .
 
 CMD ["npm", "start"]
 
