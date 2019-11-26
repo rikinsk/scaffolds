@@ -1,7 +1,5 @@
 function template (
-  actionName,
-  arguments,
-  outputType,
+  mutationAst,
   typesAst
 ) {
   return`
