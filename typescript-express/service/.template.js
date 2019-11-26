@@ -54,9 +54,11 @@ function template(
         typename = `Array<${typename}>`
       }
     });
+    // TODO array of array
     return {
       typename: wrappedType.name.value,
-      tsTypename: typename
+      tsTypename: typename,
+      isArray: wraps.includes('l')
     };
   }
 
@@ -80,12 +82,15 @@ ${valueDef.join(',\n')}
       const fieldTypeMetadata = getWrappedTsType(fieldDef.type);
       const fieldType = allTypes[fieldTypeMetadata.typename];
       if (fieldType && (fieldType.kind === 'InputObjectTypeDefinition' || fieldType.kind === 'ObjectTypeDefinition')) {
-        // TODO Array types
-        constructorBody.push(`    this.${fieldName} = new ${fieldTypeMetadata.typename}(_input.${fieldName})`);
+        if (fieldTypeMetadata.isArray) {
+          constructorBody.push(`    this.${fieldName} = _input.${fieldName}.map((_i: any) => new ${fieldTypeMetadata.typename}(_i) );`);
+        } else {
+          constructorBody.push(`    this.${fieldName} = new ${fieldTypeMetadata.typename}(_input.${fieldName})`);
+        }
       } else {
         constructorBody.push(`    this.${fieldName} = _input.${fieldName}`)
       }
-      
+
       if (fieldType && fieldType.kind === 'ScalarTypeDefinition') {
         classVars.push(`  ${fieldName}: ${fieldTypeMetadata.tsTypename};`)  
       } else {
@@ -110,7 +115,6 @@ ${constructorBody.join(';\n')}
 `;
 
   }
-
 
   const handleType = (typeDef) => {
 
@@ -146,6 +150,14 @@ ${constructorBody.join(';\n')}
 
   const outputType = mutationDef.type;
   const outputTypeMetadata = getWrappedTsType(outputType);
+
+  let outputTypeConstructorBody;
+  if (outputTypeMetadata.isArray) {
+    outputTypeConstructorBody = `this.data = _data.map((_i: any) => new ${outputTypeMetadata.typename}(_i))`
+  } else {
+    outputTypeConstructorBody = `this.data = new ${outputTypeMetadata.typename}(_data)`;
+  }
+
   if (allTypes[outputTypeMetadata.typename]) {
     handleType(allTypes[outputTypeMetadata.typename]);
   }
@@ -162,7 +174,11 @@ ${constructorBody.join(';\n')}
     const argType = allTypes[argTypeMetadata.typename];
     requestBodyVars.push(`  ${argName}: ${argTypeMetadata.tsTypename}`);
     if (argType && (argType.kind === 'InputObjectTypeDefinition' || argType.kind === 'ObjectTypeDefinition')) {
-      requestBodyConstructorBody.push(`    this.${argName} = new ${argTypeMetadata.typename}(_input.${argName})`);  
+      if (argTypeMetadata.isArray) {
+        requestBodyConstructorBody.push(`    this.${argName} = _input.${argName}.map((_i: any) => new ${argTypeMetadata.typename}(_i) );`);
+      } else {
+        requestBodyConstructorBody.push(`    this.${argName} = new ${argTypeMetadata.typename}(_input.${argName})`);
+      }
     } else {
       requestBodyConstructorBody.push(`    this.${argName} = _input.${argName}`);
     }
@@ -197,7 +213,7 @@ class ResponseBody {
   data: ${outputTypeMetadata.tsTypename}
 
   constructor(_data: any ) {
-    this.data = new ${outputTypeMetadata.tsTypename}(_data);
+    this.data = ${outputTypeConstructorBody}
   }
 
 }
@@ -221,4 +237,3 @@ export default requestHandler;
 `  
 
 }
-
