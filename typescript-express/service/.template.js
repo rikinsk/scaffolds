@@ -243,7 +243,7 @@ const routeTemplate = (mutationAst, typesAst) => {
   const actionName = mutationAst.definitions[0].fields[0].name.value;
   return `
 router.post('/${actionName.toLowerCase()}', (req: Request, res: Response) => {
-    const response = require('./${actionName}')(req.body)
+    const response = require('./${actionName}').default(req.body)
     return res.json(response);
 });
 `;

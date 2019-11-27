@@ -24,7 +24,7 @@ const routeTemplate = (mutationAst, typesAst) => {
 
   return `
 router.get('/${actionName.toLowerCase()}', (req, res) => {
-  const response = require('./${actionName}')(req.body);
+  const response = require('./${actionName}').default(req.body);
   return res.json(response);
 })
 `
