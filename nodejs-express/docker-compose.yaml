@@ -22,7 +22,8 @@ services:
     build: ./service
     labels:
     - 'hasura.actions.routes_path=service/src/routes.js'
-    - 'hasura.action=true'
+    - 'hasura.actions.handler_directory=service/src'
+    - 'hasura.actions=true'
     ports:
     - "4000"
     environment:
