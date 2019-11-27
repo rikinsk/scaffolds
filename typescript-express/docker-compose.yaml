@@ -29,6 +29,6 @@ services:
     environment:
       PORT: 4000
     volumes:
-    - ./service:/ts-app
+    - ./service/app:/ts-app/app
 volumes:
   db_data:

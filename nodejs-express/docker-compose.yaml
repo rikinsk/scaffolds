@@ -28,5 +28,7 @@ services:
     - "4000"
     environment:
       PORT: 4000
+    volumes:
+    - ./service/src:/ts-app/src
 volumes:
   db_data:

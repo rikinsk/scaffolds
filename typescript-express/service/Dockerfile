@@ -4,8 +4,7 @@ WORKDIR /ts-app
 
 COPY package*.json ./
 
-# Remove comment when using npm start
-# RUN npm ci
+RUN npm ci
 
 COPY . .
 
