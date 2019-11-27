@@ -20,10 +20,7 @@ const getTsTypeName = (typename, allTypes) => {
   return typename;
 };
 
-function handlerTemplate(
-  mutationAst,
-  typesAst,
-) {
+const handlerTemplate(mutationAst, typesAst) => {
 
   const allTypes = {};
   typesAst.definitions.forEach(definition => {
@@ -238,7 +235,7 @@ export default requestHandler;
 
 };
 
-function routeTemplate(mutationAst, typesAst) {
+const routeTemplate = (mutationAst, typesAst) => {
   const actionName = mutationAst.definitions[0].fields[0].name.value;
   return `
 router.post('/${actionName.toLowerCase()}', (req: Request, res: Response) => {
@@ -247,3 +244,5 @@ router.post('/${actionName.toLowerCase()}', (req: Request, res: Response) => {
 });
 `;
 }
+
+const FILE_EXTENSION = 'ts';

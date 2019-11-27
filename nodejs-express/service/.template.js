@@ -1,4 +1,4 @@
-function handlerTemplate (mutationAst, typesAst) {
+const handlerTemplate = (mutationAst, typesAst) => {
   return`
 const handler = (requestBody) => {
   const {
@@ -18,7 +18,7 @@ export default handler;
 `;
 };
 
-function routeTemplate (mutationAst, typesAst) {
+const routeTemplate = (mutationAst, typesAst) => {
   const mutationDef = mutationAst.definitions[0].fields[0];
   const actionName = mutationDef.name.value;
 
@@ -30,3 +30,5 @@ router.get('/${actionName.toLowerCase()}', (req, res) => {
 `
 
 }
+
+const FILE_EXTENSION = 'js';
