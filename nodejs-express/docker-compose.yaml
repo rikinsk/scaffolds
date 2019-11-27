@@ -21,7 +21,7 @@ services:
   action-service:
     build: ./service
     labels:
-    - 'hasura.action=true'
+    - 'hasura.actions.routes_path=app/controllers/actions.controller.ts'
     ports:
     - "4000"
 volumes:

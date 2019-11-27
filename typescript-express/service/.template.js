@@ -20,7 +20,7 @@ const getTsTypeName = (typename, allTypes) => {
   return typename;
 };
 
-function template(
+function handlerTemplate(
   mutationAst,
   typesAst,
 ) {
@@ -92,11 +92,11 @@ ${valueDef.join(',\n')}
       }
 
       if (fieldType && fieldType.kind === 'ScalarTypeDefinition') {
-        classVars.push(`  ${fieldName}: ${fieldTypeMetadata.tsTypename};`)  
+        classVars.push(`  ${fieldName}: ${fieldTypeMetadata.tsTypename};`)
       } else {
         classVars.push(`  ${fieldName}: ${fieldTypeMetadata.tsTypename};`)
       }
-      
+
       if (fieldType) {
         handleType(fieldType);
       }
@@ -182,7 +182,7 @@ ${constructorBody.join(';\n')}
     } else {
       requestBodyConstructorBody.push(`    this.${argName} = _input.${argName}`);
     }
-    
+
     return ;
   })
 
@@ -192,7 +192,7 @@ ${classesCodegen}
 class ${actionPrefix}Input {
 
 ${requestBodyVars.join(';\n')}
-  
+
   constructor (_input: any) {
 ${requestBodyConstructorBody.join(';\n')}
   }
@@ -234,6 +234,16 @@ function requestHandler(requestBody: any) {
 };
 
 export default requestHandler;
-`  
+`
 
+};
+
+function routeTemplate(mutationAst, typesAst) {
+  const actionName = mutationAst.definitions[0].fields[0].name.value;
+  return `
+router.post('/${actionName.toLowerCase()}', (req: Request, res: Response) => {
+    const response = require('./${actionName}')(req.body)
+    return res.json(response);
+});
+`;
 }

@@ -1,7 +1,4 @@
-function template (
-  mutationAst,
-  typesAst
-) {
+function handlerTemplate (mutationAst, typesAst) {
   return`
 const handler = (requestBody) => {
   const {
@@ -16,5 +13,20 @@ const handler = (requestBody) => {
     }
   }
 }
+
+export default handler;
 `;
 };
+
+function routeTemplate (mutationAst, typesAst) {
+  const mutationDef = mutationAst.definitions[0].fields[0];
+  const actionName = mutationDef.name.value;
+
+  return `
+router.get('/${actionName.toLowerCase()}', (req, res) => {
+  const response = require('./${actionName}')(req.body);
+  return res.json(response);
+})
+`
+
+}

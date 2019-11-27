@@ -1,16 +1,10 @@
 import { Router, Request, Response } from 'express';
 
 const router: Router = Router();
+export const ActionsController: Router = router;
 
-router.post('/', (req: Request, res: Response) => {
-    res.json({hello: "world"});
-});
-
-router.get('/:name', (req: Request, res: Response) => {
-    let { name } = req.params;
-
-    res.send(`Hello, ${name}!`);
+router.get('/', (req: Request, res: Response) => {
+    res.send(`Hello world`);
 });
 
 
-export const WelcomeController: Router = router;
