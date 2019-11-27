@@ -224,11 +224,11 @@ function requestHandler(requestBody: any) {
 
   // your logic
 
-  const response = new ResponseBody({
+  const response = {
     data: {
 
     }
-  });
+  };
 
   return response;
 
