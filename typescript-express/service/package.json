@@ -7,7 +7,7 @@
   },
   "scripts": {
     "tsc": "tsc",
-    "dev": "nodemon",
+    "dev": "npm ci && nodemon",
     "start": "npm run tsc && node ./app/server.js"
   },
   "devDependencies": {
