@@ -9,5 +9,5 @@ app.use(bodyParser.json());
 app.use('/', ActionsController);
 
 app.listen(port, () => {
-    console.log(`Listening at http://localhost:${port}/`);
+  console.log(`Listeningg at http://localhost:${port}/`);
 });
