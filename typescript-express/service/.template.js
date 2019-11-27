@@ -117,6 +117,10 @@ ${constructorBody.join(';\n')}
 
     if (isInbuilt(typeDef.name.value)) return;
 
+    if (tsClasses[typeDef.name.value]) return;
+
+    tsClasses[typeDef.name.value] = true;
+
     switch(typeDef.kind) {
       case 'ObjectTypeDefinition':
         generateTSClass(typeDef);
@@ -246,3 +250,5 @@ router.post('/${actionName.toLowerCase()}', (req: Request, res: Response) => {
 }
 
 const FILE_EXTENSION = 'ts';
+
+
