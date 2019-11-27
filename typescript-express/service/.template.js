@@ -20,7 +20,7 @@ const getTsTypeName = (typename, allTypes) => {
   return typename;
 };
 
-const handlerTemplate(mutationAst, typesAst) => {
+const handlerTemplate = (mutationAst, typesAst) => {
 
   const allTypes = {};
   typesAst.definitions.forEach(definition => {
