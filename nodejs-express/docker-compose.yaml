@@ -21,8 +21,11 @@ services:
   action-service:
     build: ./service
     labels:
-    - 'hasura.actions.routes_path=src/routes.js'
+    - 'hasura.actions.routes_path=service/src/routes.js'
+    - 'hasura.action=true'
     ports:
     - "4000"
+    environment:
+      PORT: 4000
 volumes:
   db_data:
