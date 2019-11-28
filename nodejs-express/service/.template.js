@@ -1,3 +1,5 @@
+const { parse } = require('graphql');
+
 const handlerTemplate = (mutationSdl, typesSdl) => {
   return`
 const handler = (requestBody) => {
