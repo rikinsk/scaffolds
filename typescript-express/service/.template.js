@@ -2,7 +2,8 @@ const { buildSchema, printSchema, parse } = require('graphql');
 const { codegen } = require('@graphql-codegen/core');
 const typescriptPlugin = require('@graphql-codegen/typescript');
 
-const routeTemplate = (mutationAst, typesAst) => {
+const routeTemplate = (mutationSdl, typesSdl) => {
+  const mutationAst = parse(mutationSdl);
   const actionName = mutationAst.definitions[0].fields[0].name.value;
   return `
 router.post('/${actionName.toLowerCase()}', (req: Request, res: Response) => {
