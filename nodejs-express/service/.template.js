@@ -1,4 +1,4 @@
-const handlerTemplate = (mutationAst, typesAst) => {
+const handlerTemplate = (mutationSdl, typesSdl) => {
   return`
 const handler = (requestBody) => {
   const {
@@ -18,7 +18,8 @@ export default handler;
 `;
 };
 
-const routeTemplate = (mutationAst, typesAst) => {
+const routeTemplate = (mutationSdl, typesSdl) => {
+  const mutationAst = parse(mutationSdl);
   const mutationDef = mutationAst.definitions[0].fields[0];
   const actionName = mutationDef.name.value;
 
