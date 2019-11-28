@@ -1,4 +1,3 @@
-const { buildSchema, printSchema, parse } = require('graphql');
 const { codegen } = require('@graphql-codegen/core');
 const typescriptPlugin = require('@graphql-codegen/typescript');
 
