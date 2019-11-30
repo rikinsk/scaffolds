@@ -1,0 +1,15 @@
+{
+  "name": "typescript-zeit",
+  "version": "1.0.0",
+  "description": "",
+  "main": ".template.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@now/node": "^1.2.0",
+    "typescript": "^3.7.2"
+  }
+}
