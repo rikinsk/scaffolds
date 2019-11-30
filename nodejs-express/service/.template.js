@@ -3,16 +3,16 @@ const handlerTemplate = (mutationSdl, typesSdl) => {
 const handler = (requestBody) => {
   const {
     input,
-  } = requestBody
+  } = requestBody;
 
-  // custom logig
+  // custom logic
 
   return {
     data: {
       // spread the fields of the output type here
     }
   }
-}
+};
 
 export default handler;
 `;
@@ -24,10 +24,10 @@ const routeTemplate = (mutationSdl, typesSdl) => {
   const actionName = mutationDef.name.value;
 
   return `
-router.get('/${actionName.toLowerCase()}', (req, res) => {
+router.get('/${actionName}', (req, res) => {
   const response = require('./${actionName}').default(req.body);
   return res.json(response);
-})
+});
 `
 
 }
