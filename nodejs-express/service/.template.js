@@ -24,7 +24,7 @@ const routeTemplate = (mutationSdl, typesSdl) => {
   const actionName = mutationDef.name.value;
 
   return `
-router.get('/${actionName}', (req, res) => {
+router.post('/${actionName}', (req, res) => {
   const response = require('./${actionName}').default(req.body);
   return res.json(response);
 });
