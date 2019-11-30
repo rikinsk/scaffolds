@@ -51,11 +51,11 @@ function requestHandler(request: NowRequest, response: NowResponse) {
 
   // your logic
 
-  const response = {
+  response.json({
     data: {
 
     }
-  };
+  });
 
   return response;
 
